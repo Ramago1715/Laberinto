@@ -1,0 +1,19 @@
+Tu bicho se se puede mover hacia cualquier direccion menos en diagonal (abajo,derecha,izquierda,arriba) si puede mejor que se mueva a la derecha
+el sistema tiene que sugerir un movimiento que seria a la derecha y comprobaria si ese paso es posible, si lo es, se da ese paso, tambien se tendria
+que comprobar si es la salida.
+
+Tenemos una lista donde se guarda el camino que has hecho, en el caso de ser un paso a la derecha nuestro camino seria 0,0 hacie 0,1 y 
+comprobariamos si hemos llegado a la salida, volveremos a probar de ir a la derecha y el camino seria 0,2 y otra vez 0,3, ya no se podria 
+otra vez asi que propondiamos ir hacia abajo 1,3 comprobamos si se puede ir otra vez a la derecha(que no se podria) asi que bajamos otra vez
+2,3 lo volvemos a hacer 3,3 y las cordenadas de la meta coinciden con nuestra posicion, guardamos las cordenada por donde hemos pasado y asi
+sabremos el camino para llegar a la salida.
+
+
+
+-problemas
+Volver al mismo sitio al proponerte que vayas a la derecha siempre
+-----------------------------------------------
+Quedarte sin camino y tener que volver a una zona que ya has pasado
+solucion:
+Separar el camino y las casillas usadas para que si no hay ninguna opcion, volver para atras, y no seguir el mismo camino anterior porque 
+en las casillas que ya has estado esta marcada

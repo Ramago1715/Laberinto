@@ -1,14 +1,38 @@
-import colorama
-def mostrar_laberinto(titulo,laberinto):
+from colorama import init,Back,Fore
+
+
+
+
+#Generar laberinto
+def generar_laberinto(tamaño):
+    array = []
+    for x in tamaño:
+        print()
+        for y in tamañol: 
+            array.append([x,y])
+    print(array)  
+    return array
+  
+
+
+
+
+
+
+#Mostrar laberinto
+def printear_laberinto(laberinto):
+    init()
     for fila in laberinto:
+        print('\t')
         for celda in fila :
             if celda==" " :
-                print (colorama.Back.RED +colorama.fore.BLACK + 'X ',end= " ")
+                print (Back.RED +Fore.BLACK + 'X ',end= " ")
             elif celda == "X" :
-                print (colorama.Back.BLACK +colorama.fore.BLACK + 'X ',end=" " )
+                print (Back.BLACK +Fore.BLACK + 'X ',end=" " )
             elif celda =="E":
-                print (colorama.Back.GREEN +colorama.Fore.GREEN + 'E',end=" ")
+                print (Back.GREEN +Fore.GREEN + 'E ',end=" ")
             elif celda =="S":
-                print (colorama.Back.YELLOW +colorama.fore.YELLOW + 'S',end=" ")
+                print (Back.YELLOW +Fore.YELLOW + 'S ',end=" ")
             elif celda ==".":
-                print (colorama.Back.RED +colorama.fore.BLACK + '.',end=" ")
+                print (Back.RED +Fore.BLACK + '. ',end=" ")
+            

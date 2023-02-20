@@ -4,29 +4,26 @@ from colorama import init,Back,Fore
 
 
 #Generar laberinto
-def generar_laberinto(tamaño,muros,entrada,salida):
+def generar_laberinto(tamaño,muros,entrada,salida,camino):
     array = []
 
-    for X in range(0,tamaño):
+    for X in range(0,tamaño+1):
         array.append([]) 
-        for Y in range(0,tamaño):
-            if (str(X) + "," +str(Y)) in muros:
-                array[X].append("X")
+        for Y in range(0,tamaño+1):
+            if X == tamaño or Y == tamaño:
+                muros.append((str(X) + "," +str(Y)))
+            elif (str(X) + "," +str(Y)) in camino:
+                array[X].append(".")
             elif (str(X) + "," +str(Y)) in salida:
                 array[X].append("E")
             elif (str(X) + "," +str(Y)) in entrada:
                 array[X].append("S")
-
+            elif (str(X) + "," +str(Y)) in muros:
+                array[X].append("X")
             else:
                 array[X].append(" ")
     return array
   
-
-
-
-
-
-
 #Mostrar laberinto
 def printear_laberinto(laberinto):
     init()
@@ -42,4 +39,4 @@ def printear_laberinto(laberinto):
             elif celda =="S":
                 print (Back.WHITE +Fore.YELLOW + '  '+ Fore.RESET + Back.RESET,end=" ")
             elif celda ==".":
-                print (Back.RED +Fore.BLACK + '. '+ Fore.RESET + Back.RESET,end=" ")
+                print (Back.CYAN +Fore.BLACK + '. '+ Fore.RESET + Back.RESET,end=" ")

@@ -6,13 +6,20 @@ from colorama import init,Back,Fore
 #Generar laberinto
 def generar_laberinto(tamaño,muros,entrada,salida,camino):
     array = []
+    muro = []
+    for numero in range(0,tamaño):
+        muro.append(str(-1)+","+str(numero))
+        muro.append(str(tamaño)+","+str(numero))
+    for numero in range(0,tamaño):
+        muro.append(str(numero)+","+str(-1))
+        muro.append(str(numero)+","+str(tamaño))
 
-    for X in range(0,tamaño+1):
+    for X in range(0,tamaño):
         array.append([]) 
-        for Y in range(0,tamaño+1):
-            if X == tamaño or Y == tamaño:
-                muros.append((str(X) + "," +str(Y)))
-            elif (str(X) + "," +str(Y)) in camino:
+        for Y in range(0,tamaño):
+
+
+            if (str(X) + "," +str(Y)) in camino:
                 array[X].append(".")
             elif (str(X) + "," +str(Y)) in salida:
                 array[X].append("E")
@@ -22,7 +29,7 @@ def generar_laberinto(tamaño,muros,entrada,salida,camino):
                 array[X].append("X")
             else:
                 array[X].append(" ")
-    return array
+    return array,muro
   
 #Mostrar laberinto
 def printear_laberinto(laberinto):

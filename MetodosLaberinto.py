@@ -53,8 +53,12 @@ def printear_laberinto(laberinto:list[str]):
                 print (Back.WHITE +'  '+ Fore.RESET + Back.RESET,end=" ")
             elif celda ==".":
                 print (Back.CYAN +Fore.BLACK + '. '+ Fore.RESET + Back.RESET,end=" ")
+        
 
-def movimiento_laberinto(salida:str,muro:list[str],tamaño:int,entrada:str,exterior:list[str],monigote:str,camino:list[str]):
+
+
+def movimiento_laberinto(salida:str,muro:list[str],tamaño:int,entrada:str,exterior:list[str],monigote:str,camino:list[str],movimiento:list[str]):
+    muroinvisible = []
     salir = False
     X:int = 0
     Y:int = 0
@@ -62,11 +66,13 @@ def movimiento_laberinto(salida:str,muro:list[str],tamaño:int,entrada:str,exter
     #No sale del bucle
     print("\n")
     while salir == False:
+        print(camino)
+        print(movimiento)
         atascado = True
         if monigote == salida:
             salir = True
         #Ir a la derecha, comrpueba si la posicion de la derecha hay muro o camino y si no se mueve
-        elif str(X)+","+str(Y+1) not in muro and str(X)+","+str(Y+1) not in camino and str(X)+","+str(Y+1) not in exterior:
+        elif str(X)+","+str(Y+1) not in muro and str(X)+","+str(Y+1) not in camino and str(X)+","+str(Y+1) not in exterior and str(X)+","+str(Y+1) not in muroinvisible:
             #En el caso de cumplirse aumento el valor de la Y, agrego la posicion a camino
             #Y modifico la posicion del monigote a la ultima posicion del camino, es decir a la acutal
             Y = Y+1
@@ -76,11 +82,12 @@ def movimiento_laberinto(salida:str,muro:list[str],tamaño:int,entrada:str,exter
             laberinto,exterior = generar_laberinto(tamaño,muro,entrada,salida,camino)
             printear_laberinto(laberinto)
             time.sleep(1)
+            movimiento.append("derecha")
             #Atascado es = false, para que declarar que ha hecho un movimiento
             atascado = False
             print("\n")
         #Ir abajo
-        elif str(X+1)+","+str(Y) not in muro and str(X+1)+","+str(Y) not in camino and str(X+1)+","+str(Y) not in exterior:
+        elif str(X+1)+","+str(Y) not in muro and str(X+1)+","+str(Y) not in camino and str(X+1)+","+str(Y) not in exterior and str(X+1)+","+str(Y) not in muroinvisible:
             #En el caso de cumplirse aumento el valor de la X, agrego la posicion a camino
             #Y modifico la posicion del monigote a la ultima posicion del camino, es decir a la acutal
             X = X+1
@@ -90,34 +97,39 @@ def movimiento_laberinto(salida:str,muro:list[str],tamaño:int,entrada:str,exter
             laberinto,exterior = generar_laberinto(tamaño,muro,entrada,salida,camino)
             printear_laberinto(laberinto)
             time.sleep(1)
+            movimiento.append("abajo")
             #Atascado es = false, para que declarar que ha hecho un movimiento
             atascado = False
             print("\n")
         #Ir a la Izquierda
-        elif str(X)+","+str(Y-1) not in muro and str(X)+","+str(Y-1) not in camino and str(X)+","+str(Y-1) not in exterior:
+        elif str(X)+","+str(Y-1) not in muro and str(X)+","+str(Y-1) not in camino and str(X)+","+str(Y-1) not in exterior and str(X)+","+str(Y-1) not in muroinvisible:
             Y = Y-1
             camino.append(str(X)+","+str(Y))
             monigote = camino[-1]
             laberinto,exterior = generar_laberinto(tamaño,muro,entrada,salida,camino)
             printear_laberinto(laberinto)
             time.sleep(1)
+            movimiento.append("Izquierda")
             atascado = False
             print("\n")
         #IR arriba
-        elif str(X-1)+","+str(Y) not in muro and str(X-1)+","+str(Y) not in camino and str(X-1)+","+str(Y) not in exterior:
+        elif str(X-1)+","+str(Y) not in muro and str(X-1)+","+str(Y) not in camino and str(X-1)+","+str(Y) not in exterior and str(X-1)+","+str(Y) not in muroinvisible:
             X = X-1
             camino.append(str(X)+","+str(Y))
             monigote = camino[-1]
             laberinto,exterior = generar_laberinto(tamaño,muro,entrada,salida,camino)
             printear_laberinto(laberinto)
             time.sleep(1)
+            movimiento.append("Arriba")
             atascado = False
             print("\n")
         elif atascado == True:
             #En el caso de que entre en este condicional significa que no ha hecho ningun cambio y quiere decir que se ha quedado atascado
             #Asi que guardo la posicion del monigote como si fuera un muro para que no vuelva a pasar por ahi, pongo el monigote en el inicio otra vez
             #Y restablezco el camino para que vuelva a empezar pero con un muro donde se ha quedado atascado para que no vuelva a pasar
-            muro.append(monigote)
+            muroinvisible.append(monigote)
             monigote = entrada
-            camino = []
-            
+            camino.clear()
+            X = 0
+            Y = 0
+            movimiento.clear()
